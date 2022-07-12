@@ -1,0 +1,5 @@
+pycryptodome
+apscheduler
+notify-py
+telethon
+rich
