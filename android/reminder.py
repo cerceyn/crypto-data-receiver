@@ -1,7 +1,7 @@
 import logging
 from android import bilgi, pip_,VeriCek_,onemli,hata,gunluk
 
-from main import dispatcher
+from .main import dispatcher
 try:
     from apscheduler.schedulers.background import BackgroundScheduler
 except:
