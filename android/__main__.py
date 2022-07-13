@@ -45,7 +45,7 @@ def log(text,renk=None):
 Token="NTU1MDM4MzQ2MjpBQUhRc1Z1WmRPUlhIbktlQTRmN0tydV9XOGlmS0NKX3lkSQ=="
 
 async def botagir():
-    global bot
+    global bot,Token
     data = [1,2,3,4]
     u=""
     n()
