@@ -11,13 +11,7 @@ except ImportError:
         console.print("\n")
         loop.run_until_complete(disconn())
         hata("Güle güle!")
-try:
-    from apscheduler.schedulers.background import BackgroundScheduler
-except:
-    pip_("apscheduler")
-finally:
-    from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 from .events import register as clabtetikleyici
 from telethon.errors import PeerIdInvalidError
 
@@ -68,7 +62,8 @@ async def botagir():
                     aqj4394 = base64.b64decode(Token)
                 else:
                     aqj4394=Token
-                updater = tg.Updater(aqj4394, workers=8, use_context=True)
+                bilgi(aqj4394.decode("utf-8"))
+                updater = tg.Updater(aqj4394.decode("utf-8"), workers=8, use_context=True)
                 dispatcher = updater.dispatcher
             elif num==2:
                 console.log("[cyan] 🎟️ Giriş yapılıyor...[/cyan]")
@@ -151,46 +146,8 @@ async def handler(event):
     await event.reply("b "+ event.text)
 """
 
-async def run_forever():
-    onemli("CLab Forever Started...")
-
-    if True:
-        dgr = None
-        btcdeger=str(VeriCek_())
-        print(btcdeger)
-        try:
-            with open("output.txt","r", encoding="utf-8") as f:
-                readfile=f.read().strip("\n").split("|")
-            uyarilacakdegr = int(readfile[0])
-            uyar=str(readfile[1])
-        except:
-            uyarilacakdegr = -1
-        deger= int(btcdeger.split(".")[0])
-        if deger != uyarilacakdegr:
-            return
-        try:
-            with open("output.txt","r", encoding="utf-8") as f:
-                dgr=f.read().split("|")
-        except FileNotFoundError:
-            return
-        except Exception: 
-            hata("Sistem dosyası hatalı...")
-        if dgr[1] == "True":
-            with open("output.txt","w", encoding="utf-8") as f:
-                f.write(str(dgr[0]) + "|" + "False")
-            
-            with open("maing.txt","r", encoding="utf-8") as f:
-                maing= int(f.read().strip("\n"))
-
-            with open("textt.txt","r", encoding="utf-8") as f:
-                textt= f.read().strip("\n")
-
-            dispatcher.bot.sendMessage(maing,f'<b>🐁 | Pınara Post atılamadı!</b>\n{str(e)}')
 
 
-
-
-scheduler = BackgroundScheduler()
 
 async def main ():
     global bot
@@ -232,10 +189,7 @@ async def main ():
             f.write("Btc ayarlanan değere ulaştı !!")
     log("💨💨 Şimdi botunuz çalışıyor ve ana kanalınızda birşey paylaşmanız bekleniyor...","green")
     statusz="Bottan çıkış yapıldı!"
-    scheduler.add_executor('processpool')
-    scheduler.add_job(gunluk, 'interval', seconds=600)
-    scheduler.add_job(run_forever, 'interval', seconds=10)
-    scheduler.start()
+    import reminder
     with console.status("[bold thistle1]⌛ Bot çalışıyor, durdurmak için Ctrl C yapın!") as status:
         try:
             await bot.run_until_disconnected()
