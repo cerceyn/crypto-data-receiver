@@ -49,13 +49,19 @@ async def botagir():
     data = [1,2,3,4]
     u=""
     n()
+    onayl = onay("Farklı Token ile işlem yapmak ister misiniz?")
+    if onayl:
+        Token = soru("Token: ")
     with console.status("[bold blue] Bota girme işlemi sürüyor...") as status:
         while data:
             num = data.pop(0)
             sleep(.5)
             if num==1:
-                log("🔑 Token ayarlanıyor...","cyan")
-                aqj4394 = base64.b64decode(Token)
+                if Token.endswith("=="):
+                    log("🔑 Token ayarlanıyor...","cyan")
+                    aqj4394 = base64.b64decode(Token)
+                else:
+                    aqj4394=Token
             elif num==2:
                 console.log("[cyan] 🎟️ Giriş yapılıyor...[/cyan]")
                 console.log("[red] 🎟️ Hata alınması en muhtemel yer...[/red]")
