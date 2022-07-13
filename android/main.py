@@ -189,7 +189,7 @@ async def main ():
             f.write("Btc ayarlanan değere ulaştı !!")
     log("💨💨 Şimdi botunuz çalışıyor ve ana kanalınızda birşey paylaşmanız bekleniyor...","green")
     statusz="Bottan çıkış yapıldı!"
-    import reminder
+    import android.reminder
     with console.status("[bold thistle1]⌛ Bot çalışıyor, durdurmak için Ctrl C yapın!") as status:
         try:
             await bot.run_until_disconnected()
@@ -197,7 +197,8 @@ async def main ():
             pass #raise KeyboardInterrupt("Çıkış!")
         await disconn ()
         
-if __name__ == "__main__":
+#if __name__ == "__main__":
+if True:
     try:
         loop.run_until_complete(main())
     except KeyboardInterrupt:
