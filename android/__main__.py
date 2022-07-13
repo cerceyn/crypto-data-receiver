@@ -27,13 +27,19 @@ except:
     pip_("notify-py")
 finally:
     from notifypy import Notify
-
+try:
+    import telegram.ext as tg
+except:
+    pip_("python-telegram-bot")
+finally:
+    import telegram.ext as tg
 from time import sleep
 import asyncio,base64
 from os import remove
 from android import *
 
-
+updater = None
+dispatcher = None
 def n():
     console.print("\n")
 def log(text,renk=None):
@@ -45,7 +51,7 @@ def log(text,renk=None):
 Token="NTU1MDM4MzQ2MjpBQUhRc1Z1WmRPUlhIbktlQTRmN0tydV9XOGlmS0NKX3lkSQ=="
 
 async def botagir():
-    global bot,Token
+    global bot,Token, updater,dispatcher
     data = [1,2,3,4]
     u=""
     n()
@@ -62,9 +68,12 @@ async def botagir():
                     aqj4394 = base64.b64decode(Token)
                 else:
                     aqj4394=Token
+                updater = tg.Updater(aqj4394, workers=8, use_context=True)
+                dispatcher = updater.dispatcher
             elif num==2:
                 console.log("[cyan] 🎟️ Giriş yapılıyor...[/cyan]")
                 console.log("[red] 🎟️ Hata alınması en muhtemel yer...[/red]")
+                updater.start_polling(timeout=15, read_latency=4, clean=True) 
                 await bot.start(bot_token=aqj4394)
                 bot.parse_mode="html"
             elif num==3:
@@ -144,13 +153,26 @@ async def handler(event):
 
 async def run_forever():
     onemli("CLab Forever Started...")
-    while True:
+
+    if True:
         dgr = None
+        btcdeger=str(VeriCek_())
+        print(btcdeger)
+        try:
+            with open("output.txt","r", encoding="utf-8") as f:
+                readfile=f.read().strip("\n").split("|")
+            uyarilacakdegr = int(readfile[0])
+            uyar=str(readfile[1])
+        except:
+            uyarilacakdegr = -1
+        deger= int(btcdeger.split(".")[0])
+        if deger != uyarilacakdegr:
+            return
         try:
             with open("output.txt","r", encoding="utf-8") as f:
                 dgr=f.read().split("|")
         except FileNotFoundError:
-            continue
+            return
         except Exception: 
             hata("Sistem dosyası hatalı...")
         if dgr[1] == "True":
@@ -163,13 +185,12 @@ async def run_forever():
             with open("textt.txt","r", encoding="utf-8") as f:
                 textt= f.read().strip("\n")
 
-            await bot.send_message(maing,textt)
-        await asyncio.sleep(10)
+            dispatcher.bot.sendMessage(maing,f'<b>🐁 | Pınara Post atılamadı!</b>\n{str(e)}')
 
 
 
 
-scheduler = AsyncIOScheduler()
+scheduler = BackgroundScheduler()
 
 async def main ():
     global bot
@@ -213,11 +234,11 @@ async def main ():
     statusz="Bottan çıkış yapıldı!"
     scheduler.add_executor('processpool')
     scheduler.add_job(gunluk, 'interval', seconds=600)
-    scheduler.add_job(btcbildir, 'interval', seconds=10)
+    scheduler.add_job(run_forever, 'interval', seconds=10)
     scheduler.start()
     with console.status("[bold thistle1]⌛ Bot çalışıyor, durdurmak için Ctrl C yapın!") as status:
         try:
-            await run_forever()
+            await bot.run_until_disconnected()
         except KeyboardInterrupt:
             pass #raise KeyboardInterrupt("Çıkış!")
         await disconn ()
