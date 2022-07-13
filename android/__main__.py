@@ -66,6 +66,22 @@ async def settt(m):
         return await m.reply("<i>Sanırım bir antivirüs programı bunu engelliyor..</i>")
     await m.reply(f"✅<i>İşlem Tamamlandı..\nAyarlanan Değer: {string}</i>")
 
+@clabtetikleyici(bot=bot,incoming=True, pattern="^.settext",patterncorrect=False,disable_edited=True)
+async def settt(m):
+    string = m.pattern_match.group(1)
+    if not string:
+        return await m.reply("<i>Lütfen bir değer ayarlayın..\nÖr: /settext Btc ayarlanan değere ulaştı</i>")
+    from_user = await m.get_sender()
+    if from_user.id not in [1210782223,1687646994]:
+        return await m.reply("<i>Sadece izin verilen kişiler değiştirebilir. Ör chapolen</i>")
+    try:
+        with open("textt.txt","w", encoding="utf-8") as f:
+            f.write(string)
+    except:
+        return await m.reply("<i>Sanırım bir antivirüs programı bunu engelliyor..</i>")
+    await m.reply(f"✅<i>İşlem Tamamlandı..\nAyarlanan Değer: {string}</i>")
+
+
 @clabtetikleyici(bot=bot,incoming=True, pattern="^.btc",disable_edited=True)
 async def btcc(m):
     msg=await m.reply("<i>Değer getiriliyor...</i>")
