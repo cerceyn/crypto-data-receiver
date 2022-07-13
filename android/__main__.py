@@ -149,7 +149,9 @@ async def run_forever():
         try:
             with open("output.txt","r", encoding="utf-8") as f:
                 dgr=f.read().split("|")
-        except: 
+        except FileNotFoundError:
+            continue
+        except Exception: 
             hata("Sistem dosyası hatalı...")
         if dgr[1] == "True":
             with open("output.txt","w", encoding="utf-8") as f:
