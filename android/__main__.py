@@ -106,18 +106,15 @@ async def handler(event):
 
 
 async def main ():
-    global bot,updater,dispatcher
+    global bot,maing
     statusz=None
-    global maing
     if os.name!="nt": os.system("clear")
     else: os.system("cls")
     logo(True)
     internet()
     if statusz:
         passed(statusz);statusz=None
-    global bot
-    bot,updater = await botaqgir()
-    dispatcher = updater.dispatcher
+    bot = await botaqgir()
     if not os.path.exists("maing.txt"):
         maing = str(soru("Hangi grupla işlem yapılacak? "))
         try:
@@ -147,14 +144,14 @@ async def main ():
     statusz="Bottan çıkış yapıldı!"
     
     scheduler = BackgroundScheduler()
-    scheduler.add_executor('processpool')
-    scheduler.add_job(gunluk, 'interval', seconds=600)
+    #scheduler.add_executor('processpool')
+    #scheduler.add_job(gunluk, 'interval', seconds=600)
     scheduler.add_job(run_forever, 'interval', seconds=10)
     bilgi("Reminder started..")
     scheduler.start()
 
     try:
-        updater.idle()
+        await bot.run_until_disconnected()
     except KeyboardInterrupt:
         pass #raise KeyboardInterrupt("Çıkış!")
     await disconn ()

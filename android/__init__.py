@@ -1,7 +1,6 @@
-import asyncio
 import base64
 
-from telethon import TelegramClient;loop = asyncio.get_event_loop()
+from telethon import TelegramClient
 from subprocess import PIPE, Popen
 from time import sleep as antripp
 from bs4 import BeautifulSoup
@@ -46,10 +45,6 @@ def soru (soru):
         return console.input(f"[bold yellow1]>> [/]")
     except KeyboardInterrupt:
         hata("Klavye çıkışı yapıldı!")
-def soru_ (soru):
-    nn()
-    console.print(f'[bold thistle1]❔ {soru}[/]')
-    return console.input(f"[bold yellow1]>> [/]")
 
 def logo (satirbırak=False):
     text = "█▀▀ █▀▀ █▀█ █▀▀ █▀▀ █▄█ █▄░█\n█▄▄ ██▄ █▀▄ █▄▄ ██▄ ░█░ █░▀█\n\n█░░ ▄▀█ █▄▄\n█▄▄ █▀█ █▄█"
@@ -110,16 +105,17 @@ Token="NTU1MDM4MzQ2MjpBQUYtSnQ3aUhrd2gtUTVnekFYM05lUzM4dEZUUHV3WFlSdw=="
 onayl = onay("Farklı Token ile işlem yapmak ister misiniz?")
 if onayl:
     Token = soru("Token: ")
-dispatcher = None
-updater = None
+    updater = tg.Updater(Token.decode("utf-8"), workers=8, use_context=True)
+else:
+    updater = tg.Updater(base64.b64decode(Token).decode("utf-8"), workers=8, use_context=True)
+dispatcher = updater.dispatcher
 
-LOGUKAPAT = logging.getLogger('apscheduler.executors.default')
-LOGUKAPAT.setLevel(logging.ERROR)
+
 
 onemli("Hesjkxecjnvrıcnxe")
 
 async def botaqgir():
-    global bot,Token, updater,dispatcher
+    global bot
     data = [1,2,3,4]
     u=""
     n()
@@ -134,7 +130,7 @@ async def botaqgir():
                     aqj4394 = base64.b64decode(Token)
                 else:
                     aqj4394=Token
-                updater = tg.Updater(aqj4394.decode("utf-8"), workers=8, use_context=True)
+                
             elif num==2:
                 console.log("[cyan] 🎟️ Giriş yapılıyor...[/cyan]")
                 console.log("[red] 🎟️ Hata alınması en muhtemel yer...[/red]")
@@ -152,7 +148,7 @@ async def botaqgir():
                 asesw = aqj4394
                 console.log(f'[bold][green]✅ Bot girişi yapıldı!')
                 #await bot.disconnect()
-    return bot, updater
+    return bot
 
 def gunluk():
     import datetime
