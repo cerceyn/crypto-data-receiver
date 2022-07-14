@@ -105,7 +105,10 @@ Token="NTU1MDM4MzQ2MjpBQUYtSnQ3aUhrd2gtUTVnekFYM05lUzM4dEZUUHV3WFlSdw=="
 onayl = onay("Farklı Token ile işlem yapmak ister misiniz?")
 if onayl:
     Token = soru("Token: ")
-    updater = tg.Updater(Token.decode("utf-8"), workers=8, use_context=True)
+    try:
+        Token= Token.decode("utf-8")
+    except:pass
+    updater = tg.Updater(Token, workers=8, use_context=True)
 else:
     updater = tg.Updater(base64.b64decode(Token).decode("utf-8"), workers=8, use_context=True)
 dispatcher = updater.dispatcher
